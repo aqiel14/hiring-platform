@@ -1,0 +1,23 @@
+import { JobResponse } from "@/types/job";
+
+export const MOCK_JOBS: JobResponse = {
+  data: [
+    {
+      id: "job_20251001_0001",
+      slug: "frontend-developer",
+      title: "Frontend Developer",
+      status: "active",
+      salary_range: {
+        min: 7000000,
+        max: 8000000,
+        currency: "IDR",
+        display_text: "Rp7.000.000 - Rp8.000.000",
+      },
+      list_card: {
+        badge: "Active",
+        started_on_text: "started on 1 Oct 2025",
+        cta: "Manage Job",
+      },
+    },
+  ],
+};

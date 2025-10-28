@@ -1,15 +1,23 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Nunito_Sans } from "next/font/google";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+import { Permanent_Marker } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+
+const permanentMarker = Permanent_Marker({
   subsets: ["latin"],
+  display: "swap",
+  weight: "400",
+  variable: "--font-permanent-marker",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const nunitoSans = Nunito_Sans({
   subsets: ["latin"],
+  display: "swap",
+  variable: "--font-nunito-sans",
 });
 
 export const metadata: Metadata = {
@@ -25,9 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${nunitoSans.className} antialiased flex flex-col min-h-screen`}
       >
-        {children}
+        <Navbar />
+        <main className="flex-1 flex flex-col"> {children}</main>
+        <Toaster />
       </body>
     </html>
   );
