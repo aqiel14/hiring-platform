@@ -24,7 +24,6 @@ export default function Navbar() {
 
   return (
     <header className="w-full bg-white border-b border-neutral-40 shadow-sm px-6 py-3 flex items-center justify-between">
-      {/* Left section */}
       <div className="flex items-center gap-4">
         {
           <div className="px-6 py-2">
@@ -70,7 +69,6 @@ export default function Navbar() {
         }
       </div>
 
-      {/* Right section */}
       {user && (
         <Popover>
           <PopoverTrigger asChild>
@@ -83,14 +81,18 @@ export default function Navbar() {
               />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-52 p-4">
+          <PopoverContent className="w-52 p-4 border rounded-lg shadow-xl">
             <div className="flex flex-col gap-2">
-              <span className="font-semibold">{user?.name}</span>
-              <span className="text-sm text-neutral-500">{user?.role}</span>
+              <div>
+                <h2 className="font-semibold">{user?.name}</h2>
+                <p className="text-sm text-neutral-500">
+                  Role : {user?.role.toLocaleUpperCase()}
+                </p>
+              </div>
               <Button
-                variant="outline"
+                variant="secondary"
                 onClick={logout}
-                className="mt-2 w-full"
+                className="w-full text-sm font-medium hover:bg-primary hover:text-white transition-colors"
               >
                 Logout
               </Button>

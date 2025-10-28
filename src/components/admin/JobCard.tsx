@@ -8,7 +8,6 @@ interface JobCardProps {
 }
 
 const JobCard = ({ job }: JobCardProps) => {
-  console.log("job", job);
   const formatted = new Date(job.createdAt).toLocaleDateString("en-GB", {
     day: "numeric",
     month: "long",
@@ -27,11 +26,7 @@ const JobCard = ({ job }: JobCardProps) => {
         <div className="flex justify-between">
           <p>{job.salary_range?.display_text ?? "<Salary Undisclosed>"}</p>
 
-          <Link
-            href={`/admin/job/${job.id}`}
-            // target="_blank"
-            // rel="noopener noreferrer"
-          >
+          <Link href={`/admin/job/${job.id}`}>
             <Button>Manage Job</Button>
           </Link>
         </div>

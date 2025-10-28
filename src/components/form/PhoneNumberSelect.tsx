@@ -81,7 +81,6 @@ const PhoneNumberSelect = ({
                       <CommandItem
                         key={c.name}
                         onSelect={(co) => {
-                          // field.onChange(co);
                           setSelectedCountry(c);
                           setIsOpenSelectCountry(false);
                         }}
@@ -101,7 +100,7 @@ const PhoneNumberSelect = ({
           </InputGroupText>
         </InputGroupAddon>
         <InputGroupInput
-          className="mt-2 "
+          className="mt-0.5 "
           placeholder="81XXXXXXXXXXX"
           {...field}
         />

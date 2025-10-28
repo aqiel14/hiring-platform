@@ -19,7 +19,7 @@ export const useJobStore = create<JobState>()(
         })),
     }),
     {
-      name: "job-storage", // 🔹 key name in localStorage
+      name: "job-storage",
     }
   )
 );

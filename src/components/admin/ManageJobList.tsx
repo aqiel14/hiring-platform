@@ -16,6 +16,8 @@ const ManageJobList = ({ jobId }: ManageJobListProps) => {
 
   const job = jobs.find((j) => j.id === jobId) as Job;
 
+  console.log("job", job);
+
   const applicationsForJob = useMemo(() => {
     return jobApplications.filter((app) => app.jobId === jobId);
   }, [jobApplications, jobId]);
@@ -88,7 +90,7 @@ const ManageJobList = ({ jobId }: ManageJobListProps) => {
 
   if (applicationsForJob.length === 0) {
     return (
-      <div className="p-6 flex flex-col gap-6">
+      <div className="p-6 flex flex-col gap-6 flex-1">
         <div className="w-full">
           <h2 className="text-2xl font-semibold">
             {job.title ?? "Front End Developer"}
@@ -97,13 +99,14 @@ const ManageJobList = ({ jobId }: ManageJobListProps) => {
         <EmptyState
           title="No applications yet"
           description="No candidates have applied for this position yet."
+          imageSrc={"/empty-folder.png"}
         />
       </div>
     );
   }
 
   return (
-    <div className="p-6 flex flex-col gap-6">
+    <div className="p-6 flex flex-col gap-6 ">
       <div className="w-full">
         <h2 className="text-2xl font-semibold">
           {job.title ?? "Front End Developer"}

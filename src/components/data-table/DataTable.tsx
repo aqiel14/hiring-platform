@@ -21,17 +21,14 @@ function DataTable<T = any>({
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(defaultPageSize);
 
-  // Handle column updates
   const handleColumnsChange = (newColumns: Column<T>[]) => {
     setColumns(newColumns);
     onColumnsChange?.(newColumns);
   };
 
-  // Apply filtering and sorting
   const processedData = useMemo(() => {
     let filtered = [...data];
 
-    // Apply filters
     Object.keys(filters).forEach((key) => {
       const filterValue = filters[key].toLowerCase();
       if (filterValue) {
@@ -44,7 +41,6 @@ function DataTable<T = any>({
       }
     });
 
-    // Apply sorting
     if (sortConfig) {
       const column = columns.find((col) => col.id === sortConfig.key);
       if (column) {
@@ -62,14 +58,12 @@ function DataTable<T = any>({
     return filtered;
   }, [data, filters, sortConfig, columns]);
 
-  // Pagination
   const totalPages = Math.ceil(processedData.length / pageSize);
   const paginatedData = processedData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
 
-  // Reset to page 1 when filters change
   React.useEffect(() => {
     setCurrentPage(1);
   }, [filters]);

@@ -26,7 +26,7 @@ export const useJobApplicationStore = create<JobApplicationState>()(
       clearJobApplications: () => set({ jobApplications: [] }),
     }),
     {
-      name: "job-application-storage", // 🔹 key in localStorage
+      name: "job-application-storage",
     }
   )
 );

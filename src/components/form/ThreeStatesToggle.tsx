@@ -26,7 +26,7 @@ export function ThreeStateToggle({
   return (
     <div className="flex gap-2">
       {states.map((s) => {
-        const disabled = isLockedMandatory && s.key !== "mandatory"; // disable others if mandatory-locked
+        const disabled = isLockedMandatory && s.key !== "mandatory";
         return (
           <Button
             key={s.key}
@@ -39,7 +39,6 @@ export function ThreeStateToggle({
               value === s.key && s.key === "mandatory" && " text-primary",
               value === s.key && s.key === "optional" && " text-primary",
               value === s.key && s.key === "off" && " text-primary",
-              // Hover states (only if not active)
               value !== s.key &&
                 s.key === "mandatory" &&
                 "hover:text-primary hover:bg-primary/10",

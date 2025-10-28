@@ -1,4 +1,3 @@
-// components/GestureWebcamModal.tsx
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -95,7 +94,6 @@ const GestureWebcamModal = ({
 
       handsRef.current = hands;
       setModelLoaded(true);
-      console.log("MediaPipe Hands loaded");
     } catch (error) {
       console.error("Error loading MediaPipe:", error);
       setError("Failed to load MediaPipe");
@@ -132,9 +130,6 @@ const GestureWebcamModal = ({
 
     const isCorrectGesture = fingerCount === currentStepRef.current;
 
-    console.log("fingerCount", fingerCount);
-    console.log("currentStep", currentStepRef);
-
     if (isCorrectGesture) {
       // Start timer if not started
       if (holdStartTimeRef.current === null) {
@@ -149,15 +144,11 @@ const GestureWebcamModal = ({
       // Check if 3 seconds have passed
       if (progress >= 1.0 && !hasAdvancedRef.current) {
         hasAdvancedRef.current = true;
-        console.log(`Step ${currentStep} complete!`);
         advanceToNextStep();
       }
     } else {
       // Wrong gesture - reset timer
       if (holdStartTimeRef.current !== null) {
-        console.log(
-          `Wrong gesture detected (${fingerCount} instead of ${currentStep}), resetting`
-        );
         resetHoldTimer();
       }
     }
@@ -168,16 +159,13 @@ const GestureWebcamModal = ({
       let nextStep = prevStep;
 
       if (prevStep === 3) {
-        console.log("All steps complete! Starting photo countdown...");
         resetHoldTimer();
         triggerPhotoCountdown();
       } else {
         nextStep = prevStep + 1;
-        console.log(`Advancing from step ${prevStep} to ${nextStep}`);
         resetHoldTimer();
       }
-
-      currentStepRef.current = nextStep; // ✅ keep ref synced immediately
+      currentStepRef.current = nextStep;
       return nextStep;
     });
   };
@@ -196,7 +184,6 @@ const GestureWebcamModal = ({
     let count = 0;
     let extendedFingers: string[] = [];
 
-    // Thumb
     const thumbTip = landmarks[tips[0]];
     const thumbPip = landmarks[pips[0]];
     const isRightHand = handedness === "Right";
@@ -257,7 +244,7 @@ const GestureWebcamModal = ({
     maxX = Math.min(1, maxX + padding);
     maxY = Math.min(1, maxY + padding);
 
-    // 🟩 Draw bounding box
+    // Draw bounding box
     ctx.strokeStyle = isCorrect ? "#00ff00" : "#ff0000";
     ctx.lineWidth = 4;
     const boxX = minX * canvas.width;
@@ -267,7 +254,7 @@ const GestureWebcamModal = ({
 
     ctx.strokeRect(boxX, boxY, boxWidth, boxHeight);
 
-    // 🏷️ Draw label above box
+    // Draw label above box
     const label = isCorrect ? `Pose ${currentStep}` : "Undetected";
     const labelColor = isCorrect ? "#00ff00" : "#ff0000";
 
@@ -359,7 +346,7 @@ const GestureWebcamModal = ({
   const triggerPhotoCountdown = () => {
     setDetectionEnabled(false);
 
-    // 🧹 Immediately clear the detection canvas
+    // Immediately clear the detection canvas
     if (detectionCanvasRef.current) {
       const ctx = detectionCanvasRef.current.getContext("2d");
       if (ctx)
@@ -400,7 +387,6 @@ const GestureWebcamModal = ({
         ctx.drawImage(video, 0, 0);
         const imageData = canvas.toDataURL("image/png");
         setCapturedImage(imageData);
-        console.log("Photo captured!");
       }
     }
   };
@@ -435,14 +421,13 @@ const GestureWebcamModal = ({
         videoRef.current.srcObject = stream;
       }
       setStream(stream);
-      setDetectionEnabled(true); // re-enable hand detection
+      setDetectionEnabled(true);
     } catch (error) {
       console.error("Error restarting webcam:", error);
     }
   };
 
   const resetState = () => {
-    console.log("resetting state");
     setCapturedImage(null);
     setCountdown(null);
     setCurrentStep(1);
@@ -468,11 +453,14 @@ const GestureWebcamModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
+        <div className="space-y-4 flex items-center justify-center flex-col">
           {stream && !capturedImage && countdown === null && (
-            <h2 className="text-center font-bold text-neutral-100">
-              Step {currentStep} (Pose {currentStep})
-            </h2>
+            <div className="border-t border-t-neutral-40 border-b border-b-primary  w-48 h-12 flex gap-4 items-center justify-center">
+              <div className="w-8 h-8 flex items-center justify-center rounded-full bg-primary text-white font-medium">
+                {currentStep}
+              </div>
+              <h2> Please do Pose {currentStep}</h2>
+            </div>
           )}
           {error && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">

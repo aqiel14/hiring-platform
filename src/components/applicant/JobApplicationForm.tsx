@@ -30,17 +30,16 @@ import GenderRadio from "../form/GenderRadio";
 import { useJobApplicationStore } from "@/store/jobApplicationStore";
 import { Job } from "@/types/job";
 import { useRouter } from "next/navigation";
-import { APPLICANT_USER } from "@/constants/mockUsers";
 import { CircleCheckIcon } from "lucide-react";
 import { toast } from "sonner";
 import { JobApplication } from "@/types/jobApplication";
+import { useUserStore } from "@/store/userStore";
 
 const fieldOptionEnum = z.enum(["mandatory", "optional", "off"]);
 
 const isValuePresent = (val: any) => {
   if (val === undefined || val === null) return false;
   if (typeof val === "string") return val.trim().length > 0;
-  // for Date, number, object, etc. presence is enough
   return true;
 };
 
@@ -51,7 +50,7 @@ const buildSchema = (profileReqs: Record<string, string>) => {
   const schema: Record<string, any> = {};
 
   const addField = (key: string, condition: string, type: z.ZodTypeAny) => {
-    if (condition === "off") return; // Skip entirely
+    if (condition === "off") return;
 
     if (condition === "mandatory") {
       schema[key] = makeRequired(type);
@@ -95,10 +94,8 @@ const buildSchema = (profileReqs: Record<string, string>) => {
       .optional()
   );
 
-  // dateOfBirth: use z.date() but accept strings too via preprocess if your calendar returns a Date, otherwise adjust
   const dateSchema = z.preprocess((val) => {
     if (!val) return undefined;
-    // if value is a string, try parse
     if (typeof val === "string") {
       const d = new Date(val);
       return isNaN(d.getTime()) ? val : d;
@@ -117,6 +114,7 @@ interface JobApplicationFormProps {
 const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
   const router = useRouter();
   const { jobs } = useJobStore();
+  const { user } = useUserStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [savedImage, setSavedImage] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState({
@@ -134,7 +132,6 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
 
   const profileReqs = job?.profileReqs || {};
 
-  // ✅ Dynamic schema
   const formSchema = useMemo(() => buildSchema(profileReqs), [profileReqs]);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -151,8 +148,6 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
     },
   });
 
-  console.log("job", job);
-
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const addJobApplication =
       useJobApplicationStore.getState().addJobApplication;
@@ -162,7 +157,7 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
     setTimeout(() => {
       const newJobApplication: JobApplication = {
         id: crypto.randomUUID(),
-        applicantId: APPLICANT_USER.id ?? "applicant_1",
+        applicantId: user?.id ?? "applicant_1",
         jobId: job.id as string,
         ...values,
         profilePicture: savedImage ?? undefined,

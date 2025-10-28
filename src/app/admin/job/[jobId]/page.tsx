@@ -12,7 +12,7 @@ export default function ManageJobPage() {
 
   return (
     <ProtectedRoute role="admin">
-      <div className="h-screen w-full bg-neutral-20 flex items-start justify-center">
+      <div className="flex-1 bg-neutral-20 flex items-start justify-center">
         <ManageJobList jobId={jobId} />
       </div>
     </ProtectedRoute>

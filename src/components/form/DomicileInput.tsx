@@ -19,13 +19,13 @@ export default function DomicileInput({
 }: DomicileInputProps) {
   const [items, setItems] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState(""); // visible input
+  const [inputValue, setInputValue] = useState("");
   const [filteredItems, setFilteredItems] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const formValue = field.value || ""; // regency stored in form
+  const formValue = field.value || "";
 
   useEffect(() => {
     if (!inputValue) {
@@ -71,8 +71,8 @@ export default function DomicileInput({
   };
 
   const handleSelect = (item: any) => {
-    setInputValue(item.display_name); // show display name
-    field.onChange(item.name); // store regency in form
+    setInputValue(item.display_name);
+    field.onChange(item.name);
     setOpen(false);
   };
 
@@ -85,7 +85,6 @@ export default function DomicileInput({
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     if (containerRef.current?.contains(e.relatedTarget as Node)) return;
 
-    // Reset inputValue to the display_name of current form value
     const selectedItem = items.find((i) => i.name === formValue);
     setInputValue(selectedItem ? selectedItem.display_name : "");
     setOpen(false);

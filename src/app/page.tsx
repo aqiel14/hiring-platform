@@ -10,13 +10,13 @@ export default function Home() {
 
   useEffect(() => {
     if (!user) {
-      router.replace("/login"); // not logged in → go to login
+      router.replace("/login");
     } else if (user.role === "admin") {
-      router.replace("/admin"); // admin → /admin
+      router.replace("/admin");
     } else if (user.role === "applicant") {
-      router.replace("/applicant"); // applicant → /applicant
+      router.replace("/applicant");
     }
   }, [user, router]);
 
-  return null; // optional: can show a loading spinner while redirecting
+  return null;
 }

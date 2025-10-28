@@ -8,9 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { useJobApplicationStore } from "@/store/jobApplicationStore";
 import EmptyState from "../EmptyState";
-import { APPLICANT_USER } from "@/constants/mockUsers";
 import { Job } from "@/types/job";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/store/userStore";
 
 const jobResponsibilities = [
   "Develop, test, and maintain responsive, high-performance web applications using modern front-end technologies.",
@@ -29,6 +29,8 @@ const JobListApplicant = () => {
   const { jobApplications, setJobApplications } = useJobApplicationStore();
   const router = useRouter();
 
+  const { user } = useUserStore();
+
   const [activeJob, setActiveJob] = useState<Job | null>(null);
 
   useEffect(() => {
@@ -37,16 +39,9 @@ const JobListApplicant = () => {
     }
   }, [jobs, activeJob]);
 
-  console.log("activeJob", activeJob);
-
   const isApplied = jobApplications.some(
-    (ja) => ja.applicantId === APPLICANT_USER.id && ja.jobId === activeJob?.id
+    (ja) => ja.applicantId === user?.id && ja.jobId === activeJob?.id
   );
-
-  // console.log("APPLICANT_USER.id", APPLICANT_USER.id);
-  // console.log("ja.jobId", jobApplications[0].id);
-
-  // console.log("jobApplications", jobApplications);
 
   if (jobs.length === 0)
     return (
@@ -120,7 +115,9 @@ const JobListApplicant = () => {
               className="rounded-sm border border-neutral-40 h-12 w-12"
             />
             <div className="flex flex-col gap-1">
-              <Badge>{activeJob?.jobType ?? "Full-Time"}</Badge>
+              <Badge className="capitalize">
+                {activeJob?.jobType ?? "Full-Time"}
+              </Badge>
               <h3 className="font-bold text-md text-neutral-90">
                 {activeJob?.title ?? "UX Designer"}
               </h3>
@@ -140,11 +137,21 @@ const JobListApplicant = () => {
           </Button>
         </div>
         <div>
-          <ul className="list-disc pl-5 space-y-2 text-sm text-neutral-80">
-            {jobResponsibilities.map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
+          {activeJob?.jobDescription ? (
+            <div className="space-y-1">
+              {activeJob.jobDescription.split("\n").map((line, i) => (
+                <p key={i} className="leading-relaxed">
+                  {line}
+                </p>
+              ))}
+            </div>
+          ) : (
+            <ul className="list-disc pl-5 space-y-2 text-sm text-neutral-80">
+              {jobResponsibilities.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

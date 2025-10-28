@@ -67,7 +67,7 @@ const formSchema = z
       data.maxSalary >= data.minSalary,
     {
       message: "Maximum salary must be greater than or equal to minimum salary",
-      path: ["maxSalary"], // attach error to maxSalary field
+      path: ["maxSalary"],
     }
   );
 
@@ -104,7 +104,7 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    setIsLoading(true); // start loading
+    setIsLoading(true);
 
     const newJob: any = {
       id: `job_${Date.now()}`,
@@ -133,13 +133,9 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
       createdAt: new Date().toISOString(),
     };
 
-    console.log("Submitting job...", newJob);
-
-    // simulate 2s loading
     setTimeout(() => {
       addJob(newJob);
-      setIsLoading(false); // stop loading
-      console.log("Job added:", newJob);
+      setIsLoading(false);
       onSuccess();
     }, 2000);
   }
@@ -252,7 +248,7 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
                       {...field}
                       onChange={(e) => {
                         const val = e.target.value;
-                        if (/^\d*$/.test(val)) field.onChange(val); // allow digits only
+                        if (/^\d*$/.test(val)) field.onChange(val);
                       }}
                       value={field.value ?? ""}
                     />
@@ -284,7 +280,7 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
                           {...field}
                           onChange={(e) => {
                             const val = e.target.value;
-                            if (/^\d*$/.test(val)) field.onChange(val); // allow digits only
+                            if (/^\d*$/.test(val)) field.onChange(val);
                           }}
                           className="pl-10"
                           value={field.value ?? ""}
@@ -315,7 +311,7 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
                           {...field}
                           onChange={(e) => {
                             const val = e.target.value;
-                            if (/^\d*$/.test(val)) field.onChange(val); // allow digits only
+                            if (/^\d*$/.test(val)) field.onChange(val);
                           }}
                           className={`pl-10 ${
                             fieldState.error && "border-danger"
@@ -351,7 +347,14 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
                       <FormItem>
                         <div className="flex justify-between border-b border-[#E0E0E0] p-2">
                           <FormLabel className="capitalize">
-                            {key.replace("_", " ")}
+                            {key
+                              .replaceAll("_", " ")
+                              .split(" ")
+                              .map(
+                                (word) =>
+                                  word.charAt(0).toUpperCase() + word.slice(1)
+                              )
+                              .join(" ")}
                           </FormLabel>
                           <FormControl>
                             <ThreeStateToggle

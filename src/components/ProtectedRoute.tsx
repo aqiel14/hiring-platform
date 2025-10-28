@@ -6,7 +6,7 @@ import { useUserStore } from "@/store/userStore";
 
 interface ProtectedRouteProps {
   children: ReactNode;
-  role?: "admin" | "applicant"; // optional role check
+  role?: "admin" | "applicant";
 }
 
 export default function ProtectedRoute({
@@ -17,7 +17,6 @@ export default function ProtectedRoute({
   const { user, setUser } = useUserStore();
   const [hydrated, setHydrated] = useState(false);
 
-  // hydrate store from localStorage
   useEffect(() => {
     const storedUser = JSON.parse(
       localStorage.getItem("loggedInUser") || "null"
@@ -30,7 +29,7 @@ export default function ProtectedRoute({
     if (!hydrated) return;
 
     if (!user) router.replace("/login");
-    else if (role && user.role !== role) router.replace("/"); // wrong role
+    else if (role && user.role !== role) router.replace("/");
   }, [hydrated, user, role, router]);
 
   if (!hydrated || !user || (role && user.role !== role)) return null;

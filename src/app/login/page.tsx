@@ -28,7 +28,6 @@ import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { MOCK_USERS } from "@/constants/mockUsers";
 import { User, useUserStore } from "@/store/userStore";
 
-// 🧩 Validation schema
 const formSchema = z.object({
   username: z.string().min(1, "Username wajib diisi"),
   password: z.string().min(1, "Password wajib diisi"),
@@ -62,10 +61,8 @@ export default function LoginPage() {
     );
 
     if (user) {
-      // Set user in store (also persists to localStorage)
       useUserStore.getState().setUser(user as User);
 
-      // Redirect based on role
       if (user.role === "admin") {
         router.push("/admin");
       } else if (user.role === "applicant") {

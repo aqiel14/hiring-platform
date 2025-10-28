@@ -1,9 +1,8 @@
-// src/components/ui/LoadingSpinner.tsx
 import React from "react";
 
 interface LoadingSpinnerProps {
-  size?: number; // width & height in px
-  color?: string; // Tailwind color class
+  size?: number;
+  color?: string;
 }
 
 const LoadingSpinner = ({

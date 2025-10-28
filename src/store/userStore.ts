@@ -5,7 +5,6 @@ export interface User {
   role: "admin" | "applicant";
   name: string;
   email: string;
-  profilePicture: string;
 }
 
 interface UserState {
