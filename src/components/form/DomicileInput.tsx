@@ -6,7 +6,7 @@ import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
 interface DomicileInputProps {
   field: {
-    value: string;
+    value: unknown;
     onChange: (value: string) => void;
     onBlur?: () => void;
   };

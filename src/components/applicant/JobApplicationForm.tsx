@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 import { APPLICANT_USER } from "@/constants/mockUsers";
 import { CircleCheckIcon } from "lucide-react";
 import { toast } from "sonner";
+import { JobApplication } from "@/types/jobApplication";
 
 const fieldOptionEnum = z.enum(["mandatory", "optional", "off"]);
 
@@ -159,7 +160,7 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
     setIsLoading(true);
 
     setTimeout(() => {
-      const newJobApplication = {
+      const newJobApplication: JobApplication = {
         id: crypto.randomUUID(),
         applicantId: APPLICANT_USER.id ?? "applicant_1",
         jobId: job.id as string,
@@ -169,7 +170,6 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
       };
 
       addJobApplication(newJobApplication);
-      console.log("Application saved:", newJobApplication);
 
       setIsLoading(false);
       setIsSubmitted(true);
@@ -309,8 +309,9 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your full name"
                           {...field}
+                          placeholder="Enter your full name"
+                          value={field.value as string}
                           error={!!fieldState.error}
                           errorMessage={fieldState.error?.message}
                         />
@@ -432,8 +433,9 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Enter your email"
                           {...field}
+                          placeholder="Enter your email"
+                          value={field.value as string}
                           error={!!fieldState.error}
                           errorMessage={fieldState.error?.message}
                         />
@@ -458,8 +460,9 @@ const JobApplicationForm = ({ jobId }: JobApplicationFormProps) => {
                       </FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="https://linkedin.com/in/username"
                           {...field}
+                          placeholder="https://linkedin.com/in/username"
+                          value={field.value as string}
                           error={!!fieldState.error}
                           errorMessage={fieldState.error?.message}
                         />

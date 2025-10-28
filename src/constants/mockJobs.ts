@@ -1,6 +1,6 @@
 import { JobResponse } from "@/types/job";
 
-export const MOCK_JOBS: JobResponse = {
+export const MOCK_JOBS: any = {
   data: [
     {
       id: "job_20251001_0001",

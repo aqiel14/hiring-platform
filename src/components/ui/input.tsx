@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { CircleSmall } from "lucide-react";
 
-interface InputProps extends React.ComponentProps<"input"> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   helperText?: string;
   maxLength?: number;

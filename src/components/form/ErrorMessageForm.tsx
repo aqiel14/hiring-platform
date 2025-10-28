@@ -1,7 +1,13 @@
 import { CircleSmall } from "lucide-react";
 import React from "react";
 
-const ErrorMessageForm = ({ error, errorMessage }) => {
+interface ErrorMessageFormProps {
+  error?: boolean;
+  errorMessage?: string;
+}
+
+const ErrorMessageForm = ({ error, errorMessage }: ErrorMessageFormProps) => {
+  if (!error || !errorMessage) return null;
   return (
     <div className="flex items-center justify-between text-sm mt-1">
       {/* Left side */}

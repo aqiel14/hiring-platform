@@ -26,7 +26,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { EnvelopeIcon } from "@heroicons/react/24/outline";
 import { MOCK_USERS } from "@/constants/mockUsers";
-import { useUserStore } from "@/store/userStore";
+import { User, useUserStore } from "@/store/userStore";
 
 // 🧩 Validation schema
 const formSchema = z.object({
@@ -63,7 +63,7 @@ export default function LoginPage() {
 
     if (user) {
       // Set user in store (also persists to localStorage)
-      useUserStore.getState().setUser(user);
+      useUserStore.getState().setUser(user as User);
 
       // Redirect based on role
       if (user.role === "admin") {
@@ -87,7 +87,7 @@ export default function LoginPage() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <CardHeader className="px-10">
                 <CardTitle className=" text-xl font-semibold">
-                  Masuk ke Rakamin
+                  Masuk ke HiringPlatform
                 </CardTitle>
                 <CardDescription className="text-sm">
                   Belum punya akun?{" "}
