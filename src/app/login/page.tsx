@@ -88,7 +88,9 @@ export default function LoginPage() {
                 </CardTitle>
                 <CardDescription className="text-sm">
                   Belum punya akun?{" "}
-                  <span className="text-primary">Daftar menggunakan email</span>
+                  <span className="text-primary cursor-default">
+                    Daftar menggunakan email
+                  </span>
                 </CardDescription>
               </CardHeader>
 
@@ -138,14 +140,16 @@ export default function LoginPage() {
                 </div>
                 <Button
                   variant={"outline"}
-                  className="w-full border border-neutral-40 shadow-none"
+                  className="w-full border border-neutral-40 shadow-none cursor-default"
+                  onClick={() => {}}
                 >
                   <EnvelopeIcon />
                   Send login link through email
                 </Button>
                 <Button
                   variant={"outline"}
-                  className="w-full border border-neutral-40 shadow-none"
+                  className="w-full border border-neutral-40 shadow-none cursor-default"
+                  onClick={() => {}}
                 >
                   <Image
                     src="/icon-google.svg"
