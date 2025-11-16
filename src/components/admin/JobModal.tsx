@@ -142,7 +142,7 @@ export function JobModal({ isOpen, onClose, onSuccess }: JobModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="bg-primary-foreground w-[90vw] sm:max-w-[900px]">
+      <DialogContent className="bg-primary-foreground w-[90vw] sm:max-w-[900px] max-h-[90vh] overflow-y-auto">
         <DialogHeader className="border-b px-6 pb-4 -mx-6">
           <DialogTitle>Job Opening</DialogTitle>
         </DialogHeader>
